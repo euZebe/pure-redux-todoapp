@@ -14,7 +14,12 @@ export const toggleStatus = id => ({
   id
 });
 
-const filterReducer = (state = null, action) =>
+export const filterBy = filter => ({
+  type: "FILTER_CHANGE",
+  filter
+});
+
+const filterReducer = (state = "all", action) =>
   action.type === "FILTER_CHANGE" ? action.filter : state;
 
 function taskReducer(state = [], action) {
