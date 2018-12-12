@@ -3,28 +3,18 @@ import { initStore, addTask, toggleStatus, filterBy } from "./store";
 const store = initStore();
 
 store.subscribe(() => {
-  console.clear();
-  console.warn("all tasks");
-  console.table(store.getState().tasks);
+  console.table(store.getState());
 });
 
-store.subscribe(() => {
-  const filter = store.getState().filter;
-  const filteredTasks = store
-    .getState()
-    .tasks.filter(
-      task =>
-        (task.done && filter === "done") ||
-        (!task.done && filter === "undone") ||
-        filter === "all"
-    );
-  console.warn("filtered tasks by status:", filter);
-  console.table(filteredTasks);
-});
+// TODO 7: add subscriber displaying only filtered tasks
 
-store.dispatch(addTask("actions"));
-store.dispatch(addTask("reducers"));
-store.dispatch(addTask("combine reducers"));
-store.dispatch(addTask("subscribers"));
-store.dispatch(toggleStatus(2));
-store.dispatch(filterBy("done"));
+// TODO 4
+store.dispatch({ type: "TASK_ADD", title: "actions", id: 1 });
+store.dispatch({ type: "TASK_ADD", title: "reducer", id: 2 });
+store.dispatch({ type: "TASK_ADD", title: "combine reducers", id: 3 });
+store.dispatch({ type: "TASK_ADD", title: "subscribers", id: 4 });
+// TODO 3
+store.dispatch({ type: "TASK_STATUS_TOGGLE", id: 3 });
+
+// TODO 6
+store.dispatch({ type: "FILTER_CHANGE", filter: "all" });
