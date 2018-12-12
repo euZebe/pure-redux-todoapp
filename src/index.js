@@ -1,8 +1,18 @@
-import { store } from "./store";
+import { initStore, addTask, toggleStatus } from "./store";
 
-//store.subscribe(() => console.table(store.getState()));
+const store = initStore();
 
-store.dispatch({ type: "@@task/add", payload: "speak about actions" });
-store.dispatch({ type: "@@task/add", payload: "speak about reducer" });
-store.dispatch({ type: "@@task/add", payload: "speak about combine reducers" });
-store.dispatch({ type: "@@task/toggleStatus", id: 3 });
+store.subscribe(() => {
+  console.clear();
+  console.table(store.getState().tasks);
+});
+
+store.subscribe(() => {
+  console.log("current filter:", store.getState().filter);
+});
+
+store.dispatch(addTask("actions"));
+store.dispatch(addTask("reducers"));
+store.dispatch(addTask("combine reducers"));
+store.dispatch(addTask("subscribers"));
+store.dispatch(toggleStatus(2));

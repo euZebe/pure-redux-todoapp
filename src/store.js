@@ -1,19 +1,49 @@
 import { devToolsEnhancer } from "redux-devtools-extension";
-import { createStore } from "redux";
+import { createStore, combineReducers } from "redux";
 
 let ID_GEN = 1;
 
-function todoReducer(state = [], action) {
+export const addTask = title => ({
+  type: "TASK_ADD",
+  title,
+  id: ID_GEN++
+});
+
+export const toggleStatus = id => ({
+  type: "TASK_STATUS_TOGGLE",
+  id
+});
+
+const filterReducer = (state = null, action) =>
+  action.type === "FILTER_CHANGE" ? action.filter : state;
+
+function taskReducer(state = [], action) {
   switch (action.type) {
-    case "@@task/add":
-      return [...state, { id: ID_GEN++, title: action.payload, done: false }];
-    case "@@task/toggleStatus":
+    case "TASK_ADD":
+      return [
+        ...state,
+        {
+          id: action.id,
+          title: action.title,
+          done: false
+        }
+      ];
+
+    case "TASK_STATUS_TOGGLE":
       return state.map(task =>
         action.id === task.id ? { ...task, done: !task.done } : task
       );
+
     default:
       return state;
   }
 }
 
-export const store = createStore(todoReducer, devToolsEnhancer());
+const rootReducer = combineReducers({
+  tasks: taskReducer,
+  filter: filterReducer
+});
+export const initStore = () => {
+  ID_GEN = 1;
+  return createStore(rootReducer, devToolsEnhancer());
+};
