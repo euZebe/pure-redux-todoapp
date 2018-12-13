@@ -4,28 +4,26 @@ import { createStore, combineReducers } from "redux";
 let ID_GEN = 1;
 
 export const addTask = () => ({
-  // TODO 4
+  // TODO
 });
 
 export const toggleStatus = () => ({
-  // TODO 3
+  // TODO
 });
 
 export const filterBy = filter => ({
-  // TODO 6
+  // TODO
 });
 
-const filterReducer = (state = "all", action) => {
-  // TODO 5
-};
+const filterReducer = (state = "all", action) => null; // TODO
 
-function tasksReducer(state = [], action) {
+function taskReducer(state = [], action) {
   switch (action.type) {
     case "TASK_ADD":
-      return state; // TODO 1
+      return null; // TODO
 
     case "TASK_STATUS_TOGGLE":
-      return state; // TODO 2
+      return null; // TODO
 
     default:
       return state;
@@ -33,9 +31,14 @@ function tasksReducer(state = [], action) {
 }
 
 const rootReducer = combineReducers({
-  // TODO 5
+  // TODO
 });
+
+export const getTasks = () => {}; // TODO
+export const getActiveFilter = () => {}; // TODO
+export const getFilteredTasks = () => {}; // TODO
+
 export const initStore = () => {
   ID_GEN = 1;
-  return createStore(tasksReducer, devToolsEnhancer());
+  return createStore(taskReducer, devToolsEnhancer());
 };
